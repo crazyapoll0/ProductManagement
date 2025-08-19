@@ -1,0 +1,38 @@
+package com.example.product_management;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+
+@SpringBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+//    @Bean
+//    public ModelMapper modelMapper()
+//    {
+//        ModelMapper modelMapper = new ModelMapper();
+//        modelMapper.getConfiguration()
+//                .setFieldMatchingEnabled(true)
+//                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+//
+//        return modelMapper;
+//    }
+
+    @Bean
+    @Profile("prod")
+    public ApplicationRunner runner(DataSource dataSource) {
+        return args -> {
+            // 이 부분에 실행할 코드를 넣으면 된다.
+            Connection connection = dataSource.getConnection();
+        };
+    }
+}
